@@ -6,7 +6,7 @@ export const ListGroup = ({ name, items, selectedItem, onItemSelect }) => {
         onChange={onItemSelect}
         value={selectedItem && selectedItem.genre}
       >
-        <option value="">Select genre</option>
+        <option value="">All genres</option>
         {items.map((item, index) => (
           <option key={index} value={item}>
             {item}
