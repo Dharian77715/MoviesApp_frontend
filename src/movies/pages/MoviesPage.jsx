@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
 import { ListGroup } from "../components/ListGroup";
 import { MoviesCard } from "../components/MoviesCard";
@@ -72,13 +73,15 @@ export const MoviesPage = () => {
           onItemSelect={handleGenreSelect}
         />
         <div className="d-flex justify-content-end">
-          <button className="align-self-end btn btn-primary mb-2">
+          <Link to="new" className="btn btn-primary mb-2">
             Add movie
-          </button>
+          </Link>
         </div>
       </div>
       {filteredMovies.length === 0 ? (
-        <p>No movies found</p>
+        <p>
+          There's not movie with the name<b>{` ${searchQuery}`}</b>
+        </p>
       ) : (
         <div className="row rows-cols-1 row-cols-md-3 g-3">
           {filteredMovies.map((movie) => (

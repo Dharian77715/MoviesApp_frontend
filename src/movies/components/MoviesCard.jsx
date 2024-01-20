@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { moviesApi } from "../../api/moviesApi";
 import { MovieDetails } from "../pages/MovieDetails";
@@ -48,11 +49,6 @@ export const MoviesCard = ({ movie }) => {
           <div className="col-8">
             <div className="card-body">
               <h5 className="card-title">{movie.title}</h5>
-              {/* <p className="card-text">
-                {genres.map(({ id, genre }) => (
-                  <span key={id}>{genre.split("").join()}</span>
-                ))}
-              </p> */}
               <p className="card-text">
                 {genres.map(({ id, genre }, index) => (
                   <span key={id}>
@@ -64,7 +60,12 @@ export const MoviesCard = ({ movie }) => {
               Release date: {new Date(movie.release_date).toLocaleDateString()}
               <MovieDetails movie={movie} />
             </div>
-            <button className="btn btn-outline-success m-2">Edit</button>
+            <Link
+              to={`edit/${movie.id}`}
+              className="btn btn-outline-success m-2"
+            >
+              Edit
+            </Link>
             <button className="btn btn-outline-danger m-2">Delete</button>
           </div>
         </div>
