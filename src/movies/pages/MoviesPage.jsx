@@ -6,10 +6,9 @@ import { SearchBox } from "../components/SearchBox";
 
 export const MoviesPage = () => {
   const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  console.log(genres);
 
   const getMovies = async () => {
     try {
@@ -17,7 +16,7 @@ export const MoviesPage = () => {
       setMovies(moviesData);
 
       const { data } = await moviesApi.get("/movie/genres");
-      // setGenres(data);
+      setGenres(data);
     } catch (error) {
       console.error(error);
     }
@@ -27,24 +26,34 @@ export const MoviesPage = () => {
     getMovies();
   }, []);
 
-  const handleGenreSelect = (newSelectedGenre) => {
-    setSelectedGenre(newSelectedGenre);
+  const handleGenreSelect = ({ target }) => {
+    setSelectedGenre(target.value);
     setSearchQuery("");
   };
 
   const handleSearch = (searchQuery) => {
     setSearchQuery(searchQuery);
-    setSelectedGenre([]);
+    setSelectedGenre("");
+  };
+
+  const hasGenresByMovieId = (movie, selectedGenre) => {
+    const hasSelectedGenre = movie.genres
+      ?.map(({ id }) => id)
+      ?.includes(Number(selectedGenre));
+    return hasSelectedGenre;
   };
 
   const filteredMovies = movies.filter((movie) => {
+    const filteredBySearch = movie.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     if (searchQuery) {
-      return movie.title.toLowerCase().includes(searchQuery.toLowerCase());
-    } else if (selectedGenre && selectedGenre.length > 0) {
-      return selectedGenre.some((selectedGenreItem) =>
-        genres.toLowerCase().includes(selectedGenreItem.toLowerCase())
-      );
+      return filteredBySearch;
     }
+    if (selectedGenre) {
+      return hasGenresByMovieId(movie, selectedGenre);
+    }
+
     return true;
   });
 
@@ -62,13 +71,21 @@ export const MoviesPage = () => {
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
         />
+        <div className="d-flex justify-content-end">
+          <button className="align-self-end btn btn-primary mb-2">
+            Add movie
+          </button>
+        </div>
       </div>
-
-      <div className="row rows-cols-1 row-cols-md-3 g-3">
-        {filteredMovies.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} genres={genres} />
-        ))}
-      </div>
+      {filteredMovies.length === 0 ? (
+        <p>No movies found</p>
+      ) : (
+        <div className="row rows-cols-1 row-cols-md-3 g-3">
+          {filteredMovies.map((movie) => (
+            <MoviesCard key={movie.id} movie={movie} genres={genres} />
+          ))}
+        </div>
+      )}
     </>
   );
 };

@@ -15,7 +15,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-export const MovieDetails = ({ id, title, gender, release_date }) => {
+export const MovieDetails = ({ movie }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -28,7 +28,7 @@ export const MovieDetails = ({ id, title, gender, release_date }) => {
 
   return (
     <div>
-      <small className="btn btn-outline-primary" onClick={openModal}>
+      <small className="text-primary" onClick={openModal}>
         More...
       </small>
 
@@ -41,7 +41,7 @@ export const MovieDetails = ({ id, title, gender, release_date }) => {
         closeTimeoutMS={200}
       >
         <div>
-          <h3 className="text-secondary">{`Actors participating in ${title}`}</h3>
+          <h3 className="text-secondary">{`Actors participating in ${movie.title}`}</h3>
           <hr />
           <ul>
             <li>Lista</li>
