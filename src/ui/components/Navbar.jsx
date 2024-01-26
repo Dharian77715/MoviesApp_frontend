@@ -12,7 +12,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-primary p-2">
       <Link className="navbar-brand" to="/">
-        Application
+        PhoenixFilm
       </Link>
 
       <div className="navbar-collapse">

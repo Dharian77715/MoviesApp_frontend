@@ -58,6 +58,17 @@ export const MoviesPage = () => {
     return true;
   });
 
+  const deleteMovie = async (id) => {
+    try {
+      const filteredMovies = movies.filter((m) => m.id !== id);
+      // await moviesApi.delete(`/movies/${id}`);
+      // setMovies(filteredMovies);
+      console.log("deleting", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <h1>Movies</h1>
@@ -85,7 +96,12 @@ export const MoviesPage = () => {
       ) : (
         <div className="row rows-cols-1 row-cols-md-3 g-3">
           {filteredMovies.map((movie) => (
-            <MoviesCard key={movie.id} movie={movie} genres={genres} />
+            <MoviesCard
+              key={movie.id}
+              movie={movie}
+              genres={genres}
+              onMovieDelete={deleteMovie}
+            />
           ))}
         </div>
       )}

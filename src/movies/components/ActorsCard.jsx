@@ -2,26 +2,24 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { moviesApi } from "../../api/moviesApi";
-import { MovieDetails } from "../pages/MovieDetails";
+import { ActorDetails } from "../pages/ActorDetails";
 
-export const MoviesCard = ({ movie, onMovieDelete }) => {
+export const ActorsCard = ({ actor, onActorDelete }) => {
   const [img, setImg] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [sex, setSex] = useState([]);
 
   const getImg = async () => {
-    const { data } = await moviesApi.get(`/uploads/movies/${movie.id}`, {
+    const { data } = await moviesApi.get(`/uploads/actors/${actor.id}`, {
       responseType: "blob",
     });
     const objectURL = URL.createObjectURL(data);
     setImg(objectURL);
   };
 
-  const getGenres = async () => {
+  const getSex = async () => {
     try {
-      const { data } = await moviesApi.get(
-        `/movie/genres/moviegenres/${movie.id}`
-      );
-      setGenres(data);
+      const { data } = await moviesApi.get(`/actor/sex/${actor.id}`);
+      setSex(data);
     } catch (error) {
       console.error(error);
     }
@@ -29,7 +27,7 @@ export const MoviesCard = ({ movie, onMovieDelete }) => {
 
   useEffect(() => {
     getImg();
-    getGenres();
+    getSex();
   }, []);
 
   return (
@@ -41,37 +39,31 @@ export const MoviesCard = ({ movie, onMovieDelete }) => {
               <img
                 src={img}
                 className="card-img-top"
-                alt={movie.title}
+                alt={actor?.name}
                 style={{ height: "100%", objectFit: "cover" }}
               />
             )}
           </div>
           <div className="col-8">
             <div className="card-body">
-              <h5 className="card-title">{movie.title}</h5>
-              <p className="card-text">
-                {genres.map(({ id, genre }, index) => (
-                  <span key={id}>
-                    {genre}
-                    {index < genres.length - 1 && ", "}
-                  </span>
-                ))}
-              </p>
-              Release date: {new Date(movie.release_date).toLocaleDateString()}
-              <MovieDetails movie={movie} />
+              <h5 className="card-title">{actor?.name}</h5>
+              {/* <p className="card-text">{sex}</p> */}
+              <p className="card-text">{`Date of birth: ${actor?.date_of_birth}`}</p>
+
+              {/* <ActorDetails actor={actor} /> */}
             </div>
-            <Link
-              to={`edit/${movie.id}`}
+            {/* <Link
+              to={`edit/${actor.id}`}
               className="btn btn-outline-success m-2"
             >
               Edit
             </Link>
             <button
-              onClick={() => onMovieDelete(movie.id)}
+              onClick={() => onActorDelete(actor.id)}
               className="btn btn-outline-danger m-2"
             >
               Delete
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
