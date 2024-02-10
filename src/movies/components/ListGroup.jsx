@@ -6,10 +6,10 @@ export const ListGroup = ({ name, items, selectedItem, onItemSelect }) => {
         onChange={onItemSelect}
         value={selectedItem}
       >
-        <option value="">All genres</option>
-        {items.map(({ id, genre }) => (
+        <option value="">{name}</option>
+        {items.map(({ id, genre, sex_name }) => (
           <option key={id} value={id}>
-            {genre}
+            {genre} {sex_name}
           </option>
         ))}
       </select>

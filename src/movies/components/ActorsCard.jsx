@@ -6,7 +6,7 @@ import { ActorDetails } from "../pages/ActorDetails";
 
 export const ActorsCard = ({ actor, onActorDelete }) => {
   const [img, setImg] = useState([]);
-  const [sex, setSex] = useState([]);
+  const [sex, setSex] = useState({});
 
   const getImg = async () => {
     const { data } = await moviesApi.get(`/uploads/actors/${actor.id}`, {
@@ -18,8 +18,11 @@ export const ActorsCard = ({ actor, onActorDelete }) => {
 
   const getSex = async () => {
     try {
-      const { data } = await moviesApi.get(`/actor/sex/${actor.id}`);
-      setSex(data);
+      const { data } = await moviesApi.get(`/actor/sex/${actor.sex_id}`);
+      const sex = data.find((sex) => sex.id === actor.sex_id);
+      if (sex) {
+        setSex(sex);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -39,20 +42,21 @@ export const ActorsCard = ({ actor, onActorDelete }) => {
               <img
                 src={img}
                 className="card-img-top"
-                alt={actor?.name}
+                alt={actor.name}
                 style={{ height: "100%", objectFit: "cover" }}
               />
             )}
           </div>
           <div className="col-8">
             <div className="card-body">
-              <h5 className="card-title">{actor?.name}</h5>
-              {/* <p className="card-text">{sex}</p> */}
-              <p className="card-text">{`Date of birth: ${actor?.date_of_birth}`}</p>
-
-              {/* <ActorDetails actor={actor} /> */}
+              <h5 className="card-title">{actor.name}</h5>
+              <p className="card-text">{sex.sex_name}</p>
+              <p className="card-text">{`Birth: ${new Date(
+                actor.date_of_birth
+              ).toLocaleDateString()}`}</p>
+              <ActorDetails actor={actor} />
             </div>
-            {/* <Link
+            <Link
               to={`edit/${actor.id}`}
               className="btn btn-outline-success m-2"
             >
@@ -63,7 +67,7 @@ export const ActorsCard = ({ actor, onActorDelete }) => {
               className="btn btn-outline-danger m-2"
             >
               Delete
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

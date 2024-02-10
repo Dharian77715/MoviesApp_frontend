@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
 
@@ -9,6 +8,7 @@ export const MoviesForm = () => {
 
   const [movies, setMovies] = useState({});
   const [genres, setGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const [image, setImage] = useState(null);
 
   const getMovies = async () => {
@@ -16,13 +16,12 @@ export const MoviesForm = () => {
       const { data: moviesData } = await moviesApi.get("/movies");
       const foundMovies =
         moviesData?.find((m) => m.id === Number(params.id)) || {};
-      const { release_date, ...movies } = foundMovies;
+      const { release_date, genres, ...movieData } = foundMovies;
       const release_dateSplited = release_date?.split("T")[0];
-      setMovies({ ...movies, release_date: release_dateSplited });
+      setMovies({ ...movieData, release_date: release_dateSplited });
+      setSelectedGenres(genres?.map((genre) => genre.id) || []);
 
-      const { data } = await moviesApi.get(
-        `/movie/genres/moviegenres/${params.id}`
-      );
+      const { data } = await moviesApi.get("/movie/genres");
       setGenres(data);
     } catch (error) {
       console.error(error);
@@ -33,16 +32,17 @@ export const MoviesForm = () => {
     getMovies();
   }, [params.id]);
 
-  const mapGenres = genres.map(
-    ({ id, genre }) => genre
-    // <span key={id}>
-    //   {genre}
-    //   {index < genres.length - 1 && ", "}
-    // </span>
-  );
-
   const onInputChange = ({ target }) => {
     setMovies({ ...movies, [target.name]: target.value });
+  };
+
+  const onGenreChange = (event) => {
+    const selectedGenreId = parseInt(event.target.value, 10);
+    if (event.target.checked) {
+      setSelectedGenres([...selectedGenres, selectedGenreId]);
+    } else {
+      setSelectedGenres(selectedGenres.filter((id) => id !== selectedGenreId));
+    }
   };
 
   const onFileInputChange = ({ target }) => {
@@ -50,19 +50,14 @@ export const MoviesForm = () => {
       setImage(target.files[0]);
     }
   };
+
   const handleApiImg = async (movieId) => {
     try {
       const formData = new FormData();
       formData.append("file", image);
-
-      // Construir la URL para subir la imagen utilizando el ID de la película
-      const uploadUrl = `/uploads/movies/${movieId}`;
-
-      // Hacer la solicitud para subir la imagen
-      await moviesApi.put(uploadUrl, formData);
+      await moviesApi.put(`/uploads/movies/${movieId}`, formData);
     } catch (error) {
       console.error("Error uploading image:", error);
-      throw error; // Puedes manejar el error según tus necesidades
     }
   };
 
@@ -77,16 +72,14 @@ export const MoviesForm = () => {
         await moviesApi.put(`/movies/${params.id}`, movies);
       } else {
         const response = await moviesApi.post("/movies", movies);
-
-        // Intentar obtener el ID de la respuesta
         movieId = response.data?.id || response.data?.data?.id;
-
-        if (!movieId) {
-          throw new Error("No se pudo obtener el ID de la película");
-        }
       }
 
-      // Si hay una imagen y se ha obtenido un ID de película, cargarla
+      await moviesApi.post(`/movie/genres/moviegenres`, {
+        movies_id: Number(movieId),
+        genres_id: selectedGenres,
+      });
+
       if (image && movieId) {
         await handleApiImg(movieId);
       }
@@ -113,17 +106,25 @@ export const MoviesForm = () => {
             onChange={onInputChange}
           />
         </div>
-        {/* <div className="col-5">
+
+        <div className="form-group mb-2 col-5">
           <label>Movie Genres</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Genres"
-            name="genres"
-            value={mapGenres || ""}
-            onChange={onInputChange}
-          />
-        </div> */}
+          {genres.map((genre) => (
+            <div key={genre.id} className="form-check">
+              <input
+                type="checkbox"
+                // id={`genre-${genre.id}`}
+                value={genre.id}
+                checked={selectedGenres.includes(genre.id)}
+                onChange={onGenreChange}
+                className="form-check-input"
+              />
+              <label htmlFor={`genre-${genre.id}`} className="form-check-label">
+                {genre.genre}
+              </label>
+            </div>
+          ))}
+        </div>
 
         <div className="form-group mb-2 col-5">
           <label>Release Date</label>

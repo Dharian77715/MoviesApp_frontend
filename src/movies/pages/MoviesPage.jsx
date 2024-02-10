@@ -61,9 +61,9 @@ export const MoviesPage = () => {
   const deleteMovie = async (id) => {
     try {
       const filteredMovies = movies.filter((m) => m.id !== id);
-      // await moviesApi.delete(`/movies/${id}`);
-      // setMovies(filteredMovies);
-      console.log("deleting", id);
+      await moviesApi.delete(`/movie/genres/${id}`);
+      await moviesApi.delete(`/movies/${id}`);
+      setMovies(filteredMovies);
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +79,7 @@ export const MoviesPage = () => {
           <SearchBox value={searchQuery} onChange={handleSearch} />
         </div>
         <ListGroup
+          name="All genres"
           items={genres}
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
