@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
+import { ActorsCard } from "../components/ActorsCard";
 
 const customStyles = {
   content: {
@@ -40,16 +41,19 @@ export const ActorDetails = ({ actor }) => {
         closeTimeoutMS={200}
       >
         <div>
-          <h3 className="text-secondary">{`Movies in which ${actor.name} has participated `}</h3>
+          <h3 className="text-secondary">{`${actor.name} advanced details`}</h3>
           <hr />
+          <ActorsCard actor={actor} />
+
           <ul>
-            <li>Lista</li>
-            <li>Lista</li>
-            <li>Lista</li>
-            <li>Lista</li>
-            <li>Lista</li>
-            <li>Lista</li>
-            <li>Lista</li>
+            <li>Name: {actor.name}</li>
+            <li>Sex:</li>
+            <li>Country:</li>
+            <li>DOB:</li>
+            <li>Height:</li>
+            <li>Spouse:</li>
+            <li>Children:</li>
+            <li>Movies:</li>
           </ul>
           <div className="modal-footer">
             <button className="btn btn-outline-secondary" onClick={closeModal}>
