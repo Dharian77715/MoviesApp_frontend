@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
+import Swal from "sweetalert2";
 
 export const ActorsForm = () => {
   const navigate = useNavigate();
@@ -80,9 +81,28 @@ export const ActorsForm = () => {
         await handleApiImg(actorId);
       }
 
+      if (params.id) {
+        Swal.fire({
+          icon: "success",
+          title: "Actor edited",
+          text: "The actor has been successfully edited!",
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Actor added",
+          text: "The actor has been successfully added!",
+        });
+      }
+
       navigate("/actors");
     } catch (error) {
       console.error("Error submitting the form:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response.data.message,
+      });
     }
   };
 
@@ -153,7 +173,6 @@ export const ActorsForm = () => {
         </Link>
 
         <button type="submit" className="btn btn-outline-primary btn-block">
-          <i className="far fa-save"></i>
           <span> Save</span>
         </button>
       </form>

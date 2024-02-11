@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
+import Swal from "sweetalert2";
 
 export const MoviesForm = () => {
   const navigate = useNavigate();
@@ -84,9 +85,28 @@ export const MoviesForm = () => {
         await handleApiImg(movieId);
       }
 
+      if (params.id) {
+        Swal.fire({
+          icon: "success",
+          title: "Movie edited",
+          text: "Your movie has been successfully edited!",
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Movie created",
+          text: "Your movie has been successfully created!",
+        });
+      }
+
       navigate("/");
     } catch (error) {
       console.error("Error submitting the form:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response.data.message,
+      });
     }
   };
 
@@ -160,7 +180,6 @@ export const MoviesForm = () => {
         </Link>
 
         <button type="submit" className="btn btn-outline-primary btn-block">
-          <i className="far fa-save"></i>
           <span> Save</span>
         </button>
       </form>

@@ -47,9 +47,11 @@ export const ActorDetails = ({ actor }) => {
 
           <ul>
             <li>Name: {actor.name}</li>
+            <li>
+              {`DOB: ${new Date(actor.date_of_birth).toLocaleDateString()}`}
+            </li>
             <li>Sex:</li>
             <li>Country:</li>
-            <li>DOB:</li>
             <li>Height:</li>
             <li>Spouse:</li>
             <li>Children:</li>

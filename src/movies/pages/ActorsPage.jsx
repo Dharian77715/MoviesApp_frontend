@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { moviesApi } from "../../api/moviesApi";
 import { ActorsCard } from "../components/ActorsCard";
 import { ListGroup } from "../components/ListGroup";
@@ -59,6 +60,12 @@ export const ActorsPage = () => {
     try {
       await moviesApi.delete(`/actors/${id}`);
       setActors(filteredActors.filter((actor) => actor.id !== id));
+
+      await Swal.fire({
+        icon: "success",
+        title: "Actor deleted",
+        text: "The actor has been successfully deleted!",
+      });
     } catch (error) {
       console.error(error);
     }

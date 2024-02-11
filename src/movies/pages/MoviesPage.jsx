@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { moviesApi } from "../../api/moviesApi";
-import { ListGroup } from "../components/ListGroup";
 import { MoviesCard } from "../components/MoviesCard";
+import { ListGroup } from "../components/ListGroup";
 import { SearchBox } from "../components/SearchBox";
 
 export const MoviesPage = () => {
@@ -64,6 +65,12 @@ export const MoviesPage = () => {
       await moviesApi.delete(`/movie/genres/${id}`);
       await moviesApi.delete(`/movies/${id}`);
       setMovies(filteredMovies);
+
+      await Swal.fire({
+        icon: "success",
+        title: "Movie deleted",
+        text: "The movie has been successfully deleted!",
+      });
     } catch (error) {
       console.log(error);
     }
