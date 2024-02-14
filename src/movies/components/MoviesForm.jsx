@@ -20,8 +20,6 @@ export const MoviesForm = () => {
       const { release_date, genres, ...movieData } = foundMovies;
       const release_dateSplited = release_date?.split("T")[0];
       setMovies({ ...movieData, release_date: release_dateSplited });
-      setSelectedGenres(genres?.map((genre) => genre.id) || []);
-
       const { data } = await moviesApi.get("/movie/genres");
       setGenres(data);
     } catch (error) {
@@ -29,8 +27,24 @@ export const MoviesForm = () => {
     }
   };
 
+  const getMovieGenres = async () => {
+    try {
+      const { data } = await moviesApi.get(
+        `/movie/genres/moviegenres/${params.id}`
+      );
+      const moviesGenres = data.map(({ id, active }) => ({
+        genres_id: id,
+        active,
+      }));
+      setSelectedGenres(moviesGenres || []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getMovies();
+    getMovieGenres();
   }, [params.id]);
 
   const onInputChange = ({ target }) => {
@@ -39,11 +53,38 @@ export const MoviesForm = () => {
 
   const onGenreChange = (event) => {
     const selectedGenreId = parseInt(event.target.value, 10);
-    if (event.target.checked) {
-      setSelectedGenres([...selectedGenres, selectedGenreId]);
+    const hasGenredId = selectedGenres.find(
+      ({ genres_id }) => genres_id == selectedGenreId
+    );
+    console.log(selectedGenres);
+    console.log("hasGenredId", hasGenredId);
+
+    if (hasGenredId) {
+      const updatedSelectedGenres = selectedGenres.map(
+        ({ genres_id, active }) => {
+          if (genres_id === selectedGenreId) {
+            return { genres_id, active: event.target.checked ? 1 : 0 };
+          }
+          return { genres_id, active };
+        }
+      );
+      console.log(updatedSelectedGenres);
+      setSelectedGenres(updatedSelectedGenres);
     } else {
-      setSelectedGenres(selectedGenres.filter((id) => id !== selectedGenreId));
+      setSelectedGenres([
+        ...selectedGenres,
+        { active: event.target.checked ? 1 : 0, genres_id: selectedGenreId },
+      ]);
     }
+
+    // if (event.target.checked) {
+    //   setSelectedGenres([
+    //     ...selectedGenres,
+    //     { active: event.target.checked, genres_id: selectedGenreId },
+    //   ]);
+    // } else {
+    //   setSelectedGenres(selectedGenres.filter((id) => id !== selectedGenreId));
+    // }
   };
 
   const onFileInputChange = ({ target }) => {
@@ -71,15 +112,23 @@ export const MoviesForm = () => {
       if (params.id) {
         movieId = params.id;
         await moviesApi.put(`/movies/${params.id}`, movies);
+
+        console.log("Selected", selectedGenres);
+        await moviesApi.put(`/movie/genres/moviegenres/${params.id}`, {
+          movies_id: Number(movieId),
+          genres_id: selectedGenres,
+        });
       } else {
         const response = await moviesApi.post("/movies", movies);
         movieId = response.data?.id || response.data?.data?.id;
+
+        await moviesApi.post(`/movie/genres/moviegenres`, {
+          movies_id: Number(movieId),
+          genres_id: selectedGenres,
+        });
       }
 
-      await moviesApi.post(`/movie/genres/moviegenres`, {
-        movies_id: Number(movieId),
-        genres_id: selectedGenres,
-      });
+      console.log(selectedGenres);
 
       if (image && movieId) {
         await handleApiImg(movieId);
@@ -110,6 +159,15 @@ export const MoviesForm = () => {
     }
   };
 
+  function isActiveGender(genre) {
+    return selectedGenres.find(({ genres_id, active }) => {
+      if (genres_id == genre.id && active == 1) {
+        return true;
+      }
+      return false;
+    });
+  }
+
   return (
     <>
       <h1>{params.id ? "Edit Movie" : "Add Movie"}</h1>
@@ -135,7 +193,7 @@ export const MoviesForm = () => {
                 type="checkbox"
                 // id={`genre-${genre.id}`}
                 value={genre.id}
-                checked={selectedGenres.includes(genre.id)}
+                checked={isActiveGender(genre) ? true : false}
                 onChange={onGenreChange}
                 className="form-check-input"
               />

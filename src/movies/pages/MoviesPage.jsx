@@ -99,7 +99,7 @@ export const MoviesPage = () => {
       </div>
       {filteredMovies.length === 0 ? (
         <p>
-          There's not movie with the name<b>{` ${searchQuery}`}</b>
+          There's no movie with the name<b>{` ${searchQuery}`}</b>
         </p>
       ) : (
         <div className="row rows-cols-1 row-cols-md-3 g-3">

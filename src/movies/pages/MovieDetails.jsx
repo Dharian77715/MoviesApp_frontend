@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
 import { MoviesCard } from "../components/MoviesCard";
 
 const customStyles = {
@@ -18,7 +17,6 @@ Modal.setAppElement("#root");
 
 export const MovieDetails = ({ movie }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   const openModal = () => {
     setIsOpen(true);
