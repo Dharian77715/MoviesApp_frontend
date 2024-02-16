@@ -56,8 +56,6 @@ export const MoviesForm = () => {
     const hasGenredId = selectedGenres.find(
       ({ genres_id }) => genres_id == selectedGenreId
     );
-    console.log(selectedGenres);
-    console.log("hasGenredId", hasGenredId);
 
     if (hasGenredId) {
       const updatedSelectedGenres = selectedGenres.map(
@@ -68,7 +66,6 @@ export const MoviesForm = () => {
           return { genres_id, active };
         }
       );
-      console.log(updatedSelectedGenres);
       setSelectedGenres(updatedSelectedGenres);
     } else {
       setSelectedGenres([
@@ -76,15 +73,6 @@ export const MoviesForm = () => {
         { active: event.target.checked ? 1 : 0, genres_id: selectedGenreId },
       ]);
     }
-
-    // if (event.target.checked) {
-    //   setSelectedGenres([
-    //     ...selectedGenres,
-    //     { active: event.target.checked, genres_id: selectedGenreId },
-    //   ]);
-    // } else {
-    //   setSelectedGenres(selectedGenres.filter((id) => id !== selectedGenreId));
-    // }
   };
 
   const onFileInputChange = ({ target }) => {
@@ -113,7 +101,6 @@ export const MoviesForm = () => {
         movieId = params.id;
         await moviesApi.put(`/movies/${params.id}`, movies);
 
-        console.log("Selected", selectedGenres);
         await moviesApi.put(`/movie/genres/moviegenres/${params.id}`, {
           movies_id: Number(movieId),
           genres_id: selectedGenres,
@@ -127,8 +114,6 @@ export const MoviesForm = () => {
           genres_id: selectedGenres,
         });
       }
-
-      console.log(selectedGenres);
 
       if (image && movieId) {
         await handleApiImg(movieId);
@@ -159,14 +144,14 @@ export const MoviesForm = () => {
     }
   };
 
-  function isActiveGender(genre) {
+  const isActiveGender = (genre) => {
     return selectedGenres.find(({ genres_id, active }) => {
       if (genres_id == genre.id && active == 1) {
         return true;
       }
       return false;
     });
-  }
+  };
 
   return (
     <>

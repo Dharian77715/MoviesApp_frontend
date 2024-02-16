@@ -51,17 +51,17 @@ export const MoviesCard = ({ movie, onMovieDelete }) => {
               <h5 className="card-title">{movie.title}</h5>
               <p className="card-text">
                 {genres.map(
-                  ({ id, active, genre }, index) =>
+                  ({ id, genre, active }, index) =>
                     active == 1 && (
                       <span key={id}>
                         {genre}
-                        {index < genres.length - 3 && " "}
+                        {index < genres.length - 1 && ", "}
                       </span>
                     )
                 )}
               </p>
               Release date: {new Date(movie.release_date).toLocaleDateString()}
-              <MovieDetails movie={movie} />
+              <MovieDetails genres={genres} movie={movie} />
             </div>
             <Link
               to={`edit/${movie.id}`}

@@ -97,7 +97,7 @@ export const ActorsPage = () => {
       </div>
       {filteredActors.length === 0 ? (
         <p>
-          There's no actor with name <b>{searchQuery}</b>
+          El actor <b>{searchQuery}</b> no fue encontrado
         </p>
       ) : (
         <div className="row rows-cols-1 row-cols-md-3 g-3">
