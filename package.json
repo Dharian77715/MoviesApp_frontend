@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.10",
     "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.10",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.1",
+    "react-select": "^5.8.0",
     "sweetalert2": "^11.10.5"
   },
   "devDependencies": {

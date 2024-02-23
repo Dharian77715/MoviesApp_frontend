@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
 import Swal from "sweetalert2";
+import { FileUploader } from "react-drag-drop-files";
 
 export const ActorsForm = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const fileTypes = ["JPG", "PNG", "GIF", "JPEG"];
 
   const [actors, setActors] = useState([]);
   const [sex, setSex] = useState([]);
@@ -47,10 +49,8 @@ export const ActorsForm = () => {
     }
   };
 
-  const onFileInputChange = ({ target }) => {
-    if (target.files.length > 0) {
-      setImage(target.files[0]);
-    }
+  const onFileInputChange = (file) => {
+    setImage(file);
   };
 
   const handleApiImg = async (actorId) => {
@@ -153,17 +153,16 @@ export const ActorsForm = () => {
 
         <div className="form-group mb-2 col-1">
           <label>Actor's Image</label>
-          <input
-            type="file"
-            className="form-control mb-2"
-            accept="image/png, image/jpg"
-            onChange={onFileInputChange}
+          <FileUploader
+            handleChange={onFileInputChange}
+            name="file"
+            types={fileTypes}
           />
           {image && (
             <img
               src={URL.createObjectURL(image)}
               alt="Actor"
-              style={{ maxWidth: "100%", marginTop: "10px" }}
+              style={{ maxWidth: "100%" }}
             />
           )}
         </div>

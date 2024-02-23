@@ -33,8 +33,8 @@ export const MoviesCard = ({ movie, onMovieDelete }) => {
   }, []);
 
   return (
-    <div className="col-lg-4 col-md-6 mb-4">
-      <div className="card">
+    <div className="col-lg-4 col-md-6 mb-4 ">
+      <div className="card ">
         <div className="row no-gutters">
           <div className="col-4">
             {img && (
