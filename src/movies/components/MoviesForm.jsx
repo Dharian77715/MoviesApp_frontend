@@ -56,63 +56,39 @@ export const MoviesForm = () => {
   };
 
   const onGenreChange = (selectedOptions) => {
-    const selectedGenreIds = selectedOptions.map((option) => option.value);
-    console.log(selectedGenreIds);
     const updatedSelectedGenres = selectedOptions.map((option) => ({
       genres_id: option.value,
-      active: selectedGenreIds ? 1 : 0,
-      // active: 1,
+      active: 1,
     }));
+
     setSelectedGenres(updatedSelectedGenres);
   };
 
-  // const onGenreChange = (selectedOptions) => {
-  //   const selectedGenreIds = selectedOptions.map((option) => option.value);
-  //   const updatedSelectedGenres = genres.map((genre) => ({
-  //     genres_id: genre.id,
-  //     active: selectedGenreIds.includes(genre.id) ? 1 : 0,
-  //   }));
-  //   setSelectedGenres(updatedSelectedGenres);
+  // const onGenreChange = (event) => {
+  //   const selectedGenreId = parseInt(event.target.value, 10);
+  //   const hasGenredId = selectedGenres.find(
+  //     ({ genres_id }) => genres_id == selectedGenreId
+  //   );
+
+  //   console.log("selectedGenreId", selectedGenreId);
+  //   console.log("hasGenredId", hasGenredId);
+  //   if (hasGenredId) {
+  //     const updatedSelectedGenres = selectedGenres.map(
+  //       ({ genres_id, active }) => {
+  //         if (genres_id === selectedGenreId) {
+  //           return { genres_id, active: event.target.checked ? 1 : 0 };
+  //         }
+  //         return { genres_id, active };
+  //       }
+  //     );
+  //     setSelectedGenres(updatedSelectedGenres);
+  //   } else {
+  //     setSelectedGenres([
+  //       ...selectedGenres,
+  //       { active: event.target.checked ? 1 : 0, genres_id: selectedGenreId },
+  //     ]);
+  //   }
   // };
-
-  const onGenreChange3 = (event) => {
-    const selectedGenreId = event[0]?.value;
-    for (let i in selectedGenreId) {
-      selectedGenreId[i];
-    }
-
-    const hasGenredId = selectedGenres.find(
-      ({ genres_id }) => genres_id == selectedGenreId
-    );
-
-    if (hasGenredId) {
-      const updatedSelectedGenres = selectedGenres.map(
-        ({ genres_id, active }) => {
-          if (genres_id === selectedGenreId) {
-            return { genres_id, active: selectedGenreId ? 1 : 0 };
-            console.log(genres_id);
-          }
-          return { genres_id, active };
-        }
-      );
-      setSelectedGenres(updatedSelectedGenres);
-    } else {
-      setSelectedGenres([
-        ...selectedGenres,
-        { active: event.target?.checked ? 1 : 0, genres_id: selectedGenreId },
-      ]);
-    }
-  };
-
-  const onGenreChange2 = (event) => {
-    const selectedGenreIds = selectedOptions.map((option) => option.value);
-    const updatedSelectedGenres = genres.map((genre) => ({
-      genres_id: genre.id,
-      active: selectedGenreIds.includes(genre.id) ? 1 : 0,
-    }));
-
-    setSelectedGenres(updatedSelectedGenres);
-  };
 
   const onFileInputChange = (file) => {
     setImage(file);
@@ -319,12 +295,13 @@ export const MoviesForm = () => {
 //       ({ genres_id }) => genres_id == selectedGenreId
 //     );
 
-//     console.log(selectedGenreId);
-//     console.log(hasGenredId);
+//     // console.log("selectedGenreId", selectedGenreId);
+//     // console.log("hasGenredId", hasGenredId);
 //     if (hasGenredId) {
 //       const updatedSelectedGenres = selectedGenres.map(
 //         ({ genres_id, active }) => {
 //           if (genres_id === selectedGenreId) {
+//             console.log("Selected", event.target.checked);
 //             return { genres_id, active: event.target.checked ? 1 : 0 };
 //           }
 //           return { genres_id, active };
@@ -415,12 +392,14 @@ export const MoviesForm = () => {
 //     });
 //   };
 
+//   console.log(selectedGenres);
+
 //   return (
 //     <>
 //       <h1>{params.id ? "Edit Movie" : "Add Movie"}</h1>
 //       <hr />
 //       <form className="container" onSubmit={onFormSubmit}>
-//         <div className="form-group mb-2 col-5">
+//         {/* <div className="form-group mb-2 col-5">
 //           <label>Movie Title</label>
 //           <input
 //             type="text"
@@ -430,7 +409,7 @@ export const MoviesForm = () => {
 //             value={movies.title || ""}
 //             onChange={onInputChange}
 //           />
-//         </div>
+//         </div> */}
 //         <div className="form-group mb-2 col-5">
 //           <label>Movie Genres</label>
 //           {genres.map((genre) => (
@@ -449,7 +428,7 @@ export const MoviesForm = () => {
 //           ))}
 //         </div>
 
-//         <div className="form-group mb-2 col-5">
+//         {/* <div className="form-group mb-2 col-5">
 //           <label>Release Date</label>
 //           <input
 //             type="date"
@@ -474,7 +453,7 @@ export const MoviesForm = () => {
 //               style={{ maxWidth: "100%" }}
 //             />
 //           )}
-//         </div>
+//         </div> */}
 //         <Link to={"/"} className="btn btn-outline-secondary m-2">
 //           Back
 //         </Link>
