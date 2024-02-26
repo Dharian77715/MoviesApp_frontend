@@ -56,39 +56,15 @@ export const MoviesForm = () => {
   };
 
   const onGenreChange = (selectedOptions) => {
-    const updatedSelectedGenres = selectedOptions.map((option) => ({
-      genres_id: option.value,
-      active: 1,
+    const selectedGenreIds = selectedOptions.map((option) => option.value);
+
+    const updatedSelectedGenres = selectedGenres.map(({ genres_id }) => ({
+      genres_id,
+      active: selectedGenreIds.includes(genres_id) ? 1 : 0,
     }));
 
     setSelectedGenres(updatedSelectedGenres);
   };
-
-  // const onGenreChange = (event) => {
-  //   const selectedGenreId = parseInt(event.target.value, 10);
-  //   const hasGenredId = selectedGenres.find(
-  //     ({ genres_id }) => genres_id == selectedGenreId
-  //   );
-
-  //   console.log("selectedGenreId", selectedGenreId);
-  //   console.log("hasGenredId", hasGenredId);
-  //   if (hasGenredId) {
-  //     const updatedSelectedGenres = selectedGenres.map(
-  //       ({ genres_id, active }) => {
-  //         if (genres_id === selectedGenreId) {
-  //           return { genres_id, active: event.target.checked ? 1 : 0 };
-  //         }
-  //         return { genres_id, active };
-  //       }
-  //     );
-  //     setSelectedGenres(updatedSelectedGenres);
-  //   } else {
-  //     setSelectedGenres([
-  //       ...selectedGenres,
-  //       { active: event.target.checked ? 1 : 0, genres_id: selectedGenreId },
-  //     ]);
-  //   }
-  // };
 
   const onFileInputChange = (file) => {
     setImage(file);
@@ -172,7 +148,7 @@ export const MoviesForm = () => {
       <h1>{params.id ? "Edit Movie" : "Add Movie"}</h1>
       <hr />
       <form className="container" onSubmit={onFormSubmit}>
-        {/* <div className="form-group mb-2 col-5">
+        <div className="form-group mb-2 col-5">
           <label>Movie Title</label>
           <input
             type="text"
@@ -182,7 +158,7 @@ export const MoviesForm = () => {
             value={movies.title || ""}
             onChange={onInputChange}
           />
-        </div> */}
+        </div>
 
         <div className="form-group mb-2 col-5">
           <label>Movie Genres</label>
@@ -196,7 +172,8 @@ export const MoviesForm = () => {
             isMulti
           />
         </div>
-        {/* <div className="form-group mb-2 col-5">
+
+        <div className="form-group mb-2 col-5">
           <label>Release Date</label>
           <input
             type="date"
@@ -221,7 +198,7 @@ export const MoviesForm = () => {
               style={{ maxWidth: "100%" }}
             />
           )}
-        </div> */}
+        </div>
 
         <Link to={"/"} className="btn btn-outline-secondary m-2">
           Back
