@@ -41,19 +41,10 @@
     padding: 10px;
   }
   
- .drap-drop {
-  font-family: sans-serif;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  background-color: #080908;
-}
+
 
 label {
-  width: 350px;
+  width: 250px;
   box-sizing: border-box;
 }
 

@@ -101,7 +101,7 @@ export const ActorsForm = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.response.data.message,
+        text: "Error submitting the form",
       });
     }
   };
