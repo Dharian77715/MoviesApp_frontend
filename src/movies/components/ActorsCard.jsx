@@ -51,22 +51,22 @@ export const ActorsCard = ({ actor, onActorDelete }) => {
             <div className="card-body">
               <h5 className="card-title">{actor.name}</h5>
               <p className="card-text">{sex.sex_name}</p>
-              <p className="card-text">{`Birth: ${new Date(
+              <p className="card-text">{`Nacimiento: ${new Date(
                 actor.date_of_birth
-              ).toLocaleDateString()}`}</p>
+              ).toLocaleDateString("es")}`}</p>
               <ActorDetails actor={actor} />
             </div>
             <Link
               to={`edit/${actor.id}`}
               className="btn btn-outline-success m-2"
             >
-              Edit
+              Editar
             </Link>
             <button
               onClick={() => onActorDelete(actor.id)}
               className="btn btn-outline-danger m-2"
             >
-              Delete
+              Borrar
             </button>
           </div>
         </div>

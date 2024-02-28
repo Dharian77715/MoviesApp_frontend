@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { moviesApi } from "../../api/moviesApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-regular-svg-icons";
 
 const customStyles = {
   content: {
@@ -55,7 +57,7 @@ export const MovieDetails = ({ movie }) => {
   return (
     <div>
       <small className="text-primary" onClick={openModal}>
-        More...
+        Más...
       </small>
 
       <Modal
@@ -67,7 +69,7 @@ export const MovieDetails = ({ movie }) => {
         closeTimeoutMS={200}
       >
         <div>
-          <h3 className="text-secondary">{`${movie.title} detalles avanzados`}</h3>
+          <h3 className="text-secondary">{`Detalles avanzados de ${movie.title}`}</h3>
           <hr />
 
           <div className="d-flex flex-column align-items-center">
@@ -102,29 +104,28 @@ export const MovieDetails = ({ movie }) => {
                 )}
               </h6>
               <h6>
-                <strong>País:</strong> Lorem Aliquip
+                <strong>País:</strong> {movie.country}
               </h6>
               <h6>
-                <strong>Duración:</strong> {new Date().getSeconds() + 40}{" "}
-                minutos
+                <strong>Duración:</strong> {movie.duration}
               </h6>
               <h6>
                 <strong>Año:</strong>{" "}
                 {new Date(movie.release_date).getFullYear()}
               </h6>
               <h6>
-                <strong>Director:</strong> Aute Proident
+                <strong>Director:</strong> {movie.director}
               </h6>
               <h6>
-                <strong>Elenco:</strong> Ipsum Aute, Amet Mollit, Dolor Eiusmod,
-                Nulla Occaecat, Mollit Voluptate.
+                <strong>Elenco:</strong> {movie.cast}
               </h6>
             </div>
           </div>
           <br />
           <div className="modal-footer">
             <button className="btn btn-outline-secondary" onClick={closeModal}>
-              Close
+              <FontAwesomeIcon icon={faSave} />
+              <span> Cerrar</span>
             </button>
           </div>
         </div>

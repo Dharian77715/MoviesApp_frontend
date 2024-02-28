@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { moviesApi } from "../../api/moviesApi";
 import Swal from "sweetalert2";
 import { FileUploader } from "react-drag-drop-files";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-regular-svg-icons";
 
 export const ActorsForm = () => {
   const navigate = useNavigate();
@@ -84,14 +86,14 @@ export const ActorsForm = () => {
       if (params.id) {
         Swal.fire({
           icon: "success",
-          title: "Actor edited",
-          text: "The actor has been successfully edited!",
+          title: "Actor editado",
+          text: "¡El actor ha sido editado con éxito!",
         });
       } else {
         Swal.fire({
           icon: "success",
-          title: "Actor added",
-          text: "The actor has been successfully added!",
+          title: "Actor agregado",
+          text: "¡El actor ha sido agregado con éxito!",
         });
       }
 
@@ -101,18 +103,18 @@ export const ActorsForm = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Error submitting the form",
+        text: "¡Error en el formulario, por favor revise los campos!",
       });
     }
   };
 
   return (
     <>
-      <h1>{params.id ? "Edit Actor" : "Add Actor"}</h1>
+      <h1>{params.id ? "Editar Actor" : "Agregar Actor"}</h1>
       <hr />
       <form className="container" onSubmit={onFormSubmit}>
         <div className="form-group mb-2 col-5">
-          <label>Actor's name</label>
+          <label>Nombre del actor</label>
           <input
             type="text"
             className="form-control"
@@ -124,7 +126,7 @@ export const ActorsForm = () => {
         </div>
 
         <div className="form-group mb-2 col-5">
-          <label>Actor's sex</label>
+          <label>sexo del actor</label>
           {sex.map((s) => (
             <div key={s.id} className="form-check">
               <input
@@ -140,7 +142,7 @@ export const ActorsForm = () => {
         </div>
 
         <div className="form-group mb-2 col-5">
-          <label>Date of birth</label>
+          <label>Fecha de nacimiento</label>
           <input
             type="date"
             className="form-control"
@@ -151,8 +153,56 @@ export const ActorsForm = () => {
           />
         </div>
 
+        <div className="form-group mb-2 col-5">
+          <label>Cónyuge</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Cónyuge"
+            name="spouse"
+            value={actors.spouse || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>Hijos</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Hijos"
+            name="children"
+            value={actors.children || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>País</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="País"
+            name="country"
+            value={actors.country || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>Películas</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Películas"
+            name="movies"
+            value={actors.movies || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
         <div className="form-group mb-2 col-1">
-          <label>Actor's Image</label>
+          <label>Imagen del actor</label>
           <FileUploader
             handleChange={onFileInputChange}
             name="file"
@@ -168,11 +218,12 @@ export const ActorsForm = () => {
         </div>
 
         <Link to="/actors" className="btn btn-outline-secondary m-2">
-          Back
+          Retroceder
         </Link>
 
         <button type="submit" className="btn btn-outline-primary btn-block">
-          <span> Save</span>
+          <FontAwesomeIcon icon={faSave} />
+          <span> Guardar</span>
         </button>
       </form>
     </>

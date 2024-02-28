@@ -60,20 +60,21 @@ export const MoviesCard = ({ movie, onMovieDelete }) => {
                     )
                 )}
               </p>
-              Release date: {new Date(movie.release_date).toLocaleDateString()}
+              Estreno:{" "}
+              {new Date(movie.release_date).toLocaleDateString("es-ES")}
               <MovieDetails genres={genres} movie={movie} />
             </div>
             <Link
               to={`edit/${movie.id}`}
               className="btn btn-outline-success m-2"
             >
-              Edit
+              Editar
             </Link>
             <button
               onClick={() => onMovieDelete(movie.id)}
               className="btn btn-outline-danger m-2"
             >
-              Delete
+              Borrar
             </button>
           </div>
         </div>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import { moviesApi } from "../../api/moviesApi";
 import { MoviesCard } from "../components/MoviesCard";
 import { ListGroup } from "../components/ListGroup";
@@ -68,8 +69,8 @@ export const MoviesPage = () => {
 
       await Swal.fire({
         icon: "success",
-        title: "Movie deleted",
-        text: "The movie has been successfully deleted!",
+        title: "Película eliminada",
+        text: "¡La película ha sido eliminada con exito!",
       });
     } catch (error) {
       console.log(error);
@@ -78,7 +79,7 @@ export const MoviesPage = () => {
 
   return (
     <>
-      <h1>Movies</h1>
+      <h1>Películas</h1>
       <hr />
 
       <div className="row">
@@ -86,14 +87,14 @@ export const MoviesPage = () => {
           <SearchBox value={searchQuery} onChange={handleSearch} />
         </div>
         <ListGroup
-          name="All genres"
+          name="Género"
           items={genres}
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
         />
         <div className="d-flex justify-content-end">
           <Link to="new" className="btn btn-primary mb-2">
-            Add movie
+            Agregar película
           </Link>
         </div>
       </div>

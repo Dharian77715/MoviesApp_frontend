@@ -8,7 +8,7 @@ import { SearchBox } from "../components/SearchBox";
 
 export const ActorsPage = () => {
   const [sex, setSex] = useState([]);
-  const [selectedSex, setSelectedSex] = useState("");
+  const [selectedSex, setSelectedSex] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [actors, setActors] = useState([]);
 
@@ -39,7 +39,7 @@ export const ActorsPage = () => {
   };
 
   const hasSexByMovieId = (actor, selectedSex) => {
-    const actorSex = selectedSex === "Male" ? 1 : 2;
+    const actorSex = selectedSex === "Masculino" ? 1 : 2;
     return actor.sex_id === actorSex;
   };
 
@@ -63,8 +63,8 @@ export const ActorsPage = () => {
 
       await Swal.fire({
         icon: "success",
-        title: "Actor deleted",
-        text: "The actor has been successfully deleted!",
+        title: "Actor eliminado",
+        text: "¡El actor ha sido eliminado con éxito!",
       });
     } catch (error) {
       console.error(error);
@@ -73,7 +73,7 @@ export const ActorsPage = () => {
 
   return (
     <>
-      <h1>Actors</h1>
+      <h1>Actores</h1>
       <hr />
 
       <div className="row">
@@ -81,17 +81,18 @@ export const ActorsPage = () => {
           <SearchBox value={searchQuery} onChange={handleSearch} />
         </div>
         <ListGroup
-          name="All sex"
-          items={[
-            { id: "Male", sex_name: "Male" },
-            { id: "Female", sex_name: "Female" },
-          ]}
+          name="Sexo"
+          items={sex}
+          // items={[
+          //   { id: "Masculino", sex_name: "Masculino" },
+          //   { id: "Femenino", sex_name: "Femenino" },
+          // ]}
           selectedItem={selectedSex}
           onItemSelect={handleSexSelect}
         />
         <div className="d-flex justify-content-end">
           <Link to="new" className="btn btn-primary mb-2">
-            Add Actor
+            Agregar actor
           </Link>
         </div>
       </div>

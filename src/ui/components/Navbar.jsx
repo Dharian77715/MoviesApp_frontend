@@ -1,4 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket, faVideo } from "@fortawesome/free-solid-svg-icons";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-primary p-2">
       <Link className="navbar-brand" to="/">
-        PhoenixFilm
+        PhoenixFilm <FontAwesomeIcon icon={faVideo} />
       </Link>
 
       <div className="navbar-collapse">
@@ -23,7 +25,7 @@ export const Navbar = () => {
             }
             to="/movies"
           >
-            Movies
+            Películas
           </NavLink>
           <NavLink
             className={({ isActive }) =>
@@ -31,17 +33,15 @@ export const Navbar = () => {
             }
             to="/actors"
           >
-            Actors
+            Actores
           </NavLink>
         </div>
       </div>
 
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
         <ul className="navbar-nav ml-auto">
-          <span className="nav-item nav-link text-dark">Dharian</span>
-
           <button className="nav-item nav-link btn" onClick={handleLogout}>
-            Logout
+            <FontAwesomeIcon icon={faRightFromBracket} />
           </button>
         </ul>
       </div>

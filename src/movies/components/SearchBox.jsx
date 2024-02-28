@@ -4,7 +4,7 @@ export const SearchBox = ({ value, onChange, ...rest }) => {
       type="text"
       name="query"
       className="form-control m-2"
-      placeholder="Search..."
+      placeholder="Buscar..."
       value={value}
       onChange={(e) => onChange(e.target.value)}
       {...rest}

@@ -4,6 +4,8 @@ import { moviesApi } from "../../api/moviesApi";
 import Swal from "sweetalert2";
 import { FileUploader } from "react-drag-drop-files";
 import Select from "react-select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-regular-svg-icons";
 
 export const MoviesForm = () => {
   const navigate = useNavigate();
@@ -123,14 +125,14 @@ export const MoviesForm = () => {
       if (params.id) {
         Swal.fire({
           icon: "success",
-          title: "Movie edited",
-          text: "Your movie has been successfully edited!",
+          title: "Película editada",
+          text: "¡La película ha sido editada con éxito!",
         });
       } else {
         Swal.fire({
           icon: "success",
-          title: "Movie created",
-          text: "Your movie has been successfully created!",
+          title: "Película creada",
+          text: "¡La película ha sido agregada con éxito!",
         });
       }
 
@@ -140,7 +142,7 @@ export const MoviesForm = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Error submitting the form",
+        text: "¡Error en el formulario, por favor revise los campos!!",
       });
     }
   };
@@ -157,12 +159,12 @@ export const MoviesForm = () => {
 
   return (
     <>
-      <h1>{params.id ? "Edit Movie" : "Add Movie"}</h1>
+      <h1>{params.id ? "Editar Película" : "Agregar Película"}</h1>
       <hr />
 
       <form className="container" onSubmit={onFormSubmit}>
         <div className="form-group mb-2 col-5">
-          <label>Movie Title</label>
+          <label>Título</label>
           <input
             type="text"
             className="form-control"
@@ -172,9 +174,8 @@ export const MoviesForm = () => {
             onChange={onInputChange}
           />
         </div>
-
         <div className="form-group mb-2 col-5">
-          <label>Movie Genres</label>
+          <label>Generos</label>
           <Select
             options={genres.map((genre) => ({
               value: genre.id,
@@ -185,9 +186,8 @@ export const MoviesForm = () => {
             isMulti
           />
         </div>
-
         <div className="form-group mb-2 col-5">
-          <label>Release Date</label>
+          <label>Estreno</label>
           <input
             type="date"
             className="form-control"
@@ -197,8 +197,57 @@ export const MoviesForm = () => {
             onChange={onInputChange}
           />
         </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>País</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="País"
+            name="country"
+            value={movies.country || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>Duración</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Duración"
+            name="duration"
+            value={movies.duration || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>Director</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Director"
+            name="director"
+            value={movies.director || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
+        <div className="form-group mb-2 col-5">
+          <label>Elenco</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Elenco"
+            name="cast"
+            value={movies.cast || ""}
+            onChange={onInputChange}
+          />
+        </div>
+
         <div className="form-group mb-2 col-1">
-          <label>Movie Image</label>
+          <label>Imagen</label>
           <FileUploader
             handleChange={onFileInputChange}
             name="file"
@@ -212,11 +261,11 @@ export const MoviesForm = () => {
             />
           )}
         </div>
-
         <Link to={"/"} className="btn btn-outline-secondary m-2">
-          Back
+          Retroceder
         </Link>
         <button type="submit" className="btn btn-outline-primary btn-block">
+          <FontAwesomeIcon icon={faSave} />
           <span> Save</span>
         </button>
       </form>

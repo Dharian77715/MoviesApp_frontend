@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { moviesApi } from "../../api/moviesApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-regular-svg-icons";
 
 const customStyles = {
   content: {
@@ -56,7 +58,7 @@ export const ActorDetails = ({ actor }) => {
   return (
     <div>
       <small className="text-primary" onClick={openModal}>
-        More...
+        Más...
       </small>
 
       <Modal
@@ -68,7 +70,7 @@ export const ActorDetails = ({ actor }) => {
         closeTimeoutMS={200}
       >
         <div>
-          <h3 className="text-secondary">{`${actor.name} detalles avanzados`}</h3>
+          <h3 className="text-secondary">{`Detalles avanzados de ${actor.name}`}</h3>
           <hr />
 
           <div className="d-flex flex-column align-items-center">
@@ -100,20 +102,19 @@ export const ActorDetails = ({ actor }) => {
               </h6>
 
               <h6>
-                <strong>Cónyuge:</strong> Aute ut aute proident
+                <strong>Cónyuge:</strong> {actor.spouse}
               </h6>
 
               <h6>
-                <strong>Hijos:</strong> Aliqua Sunt, Nostrud Anim, Sint Veniam
+                <strong>Hijos:</strong> {actor.children}
               </h6>
 
               <h6>
-                <strong>País:</strong> Lorem aliquip
+                <strong>País:</strong> {actor.country}
               </h6>
 
               <h6>
-                <strong>Películas:</strong> Ipsum Aute, Amet Mollit, Dolor
-                Eiusmod, Nulla Occaecat, Mollit Voluptate.
+                <strong>Películas:</strong> {actor.movies}
               </h6>
             </div>
           </div>
@@ -121,7 +122,8 @@ export const ActorDetails = ({ actor }) => {
 
           <div className="modal-footer">
             <button className="btn btn-outline-secondary" onClick={closeModal}>
-              Close
+              <FontAwesomeIcon icon={faSave} />
+              <span> Cerrar</span>
             </button>
           </div>
         </div>
