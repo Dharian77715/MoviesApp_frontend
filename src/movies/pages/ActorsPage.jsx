@@ -82,11 +82,10 @@ export const ActorsPage = () => {
         </div>
         <ListGroup
           name="Sexo"
-          items={sex}
-          // items={[
-          //   { id: "Masculino", sex_name: "Masculino" },
-          //   { id: "Femenino", sex_name: "Femenino" },
-          // ]}
+          items={[
+            { id: "Masculino", sex_name: "Masculino" },
+            { id: "Femenino", sex_name: "Femenino" },
+          ]}
           selectedItem={selectedSex}
           onItemSelect={handleSexSelect}
         />
