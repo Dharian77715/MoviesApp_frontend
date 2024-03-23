@@ -61,7 +61,6 @@ export const MoviesForm = () => {
     const selectedGenreIds = selectedOptions.map((option) => option.value);
 
     let updatedSelectedGenres = selectedGenres.slice();
-    console.log(updatedSelectedGenres);
 
     selectedGenreIds.forEach((id) => {
       if (!updatedSelectedGenres.some((genre) => genre.genres_id === id)) {
@@ -266,7 +265,7 @@ export const MoviesForm = () => {
         </Link>
         <button type="submit" className="btn btn-outline-primary btn-block">
           <FontAwesomeIcon icon={faSave} />
-          <span> Save</span>
+          <span> Guardar</span>
         </button>
       </form>
     </>
